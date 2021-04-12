@@ -1,15 +1,15 @@
-import ReactDOM from "react-dom";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./pages/Intro.js";
-import "./pages/Map.js";
+import Intro from "./pages/Intro.js";
+import Map from "./pages/Map.js";
 
 function App() {
   return (
     <Router>
-      <Route path='/' component={Intro}></Route>
+      <Route path='/' exact component={Intro}></Route>
       <Route path='/story' component={Map}></Route>
     </Router>
   );
 }
 
-export default app;
+export default App;

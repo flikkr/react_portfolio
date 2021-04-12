@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import mapboxgl from "mapbox-gl/dist/mapbox-gl-csp";
 
-function Map() {
-  const position = [51.505, -0.09];
+import "./Map.scss";
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiZmxpa2tyIiwiYSI6ImNrbmVyYXIxcTJpemIzMXBoZ3JnMDZycDIifQ.5EneSaLoyECEbvPpp2XRxA";
+
+export default function Map() {
+  const mapContainer = useRef();
+  const [lng, setLng] = useState(-70.9);
+  const [lat, setLat] = useState(42.35);
+  const [zoom, setZoom] = useState(9);
+  
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+    return () => map.remove();
+  }, []);
 
   return (
-    <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-      />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div>
+      <div className='map-container' ref={mapContainer} />
+    </div>
   );
 }
