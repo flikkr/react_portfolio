@@ -5,3 +5,19 @@
   left: 0;
   bottom: 0;
 }
+
+.map-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+
+  .map-navigator {
+    height: 30px;
+    width: 90%;
+    padding: 10px;
+    margin: auto;
+    background-color: white;
+    border-radius: 10px;
+  }
+}
