@@ -4,7 +4,7 @@ const title = "title";
 const description = "description";
 const coordinates = "coordinates";
 
-module.exports = {
+const story = {
   events: [
     {
       [title]: "The year I was born!",
@@ -17,7 +17,9 @@ module.exports = {
       [description]: "",
       [start]: new Date(1996),
       [end]: new Date(2014),
-      [coordinates]: [5, 5],
+      [coordinates]: [50.85045, 4.34878],
     },
   ],
 };
+
+export default story;
