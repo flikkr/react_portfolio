@@ -15,18 +15,23 @@ mapboxgl.accessToken =
 function Map() {
   const mapContainer = useRef("");
   const map = useRef(null);
+  const didMount = useRef(false);
   const [index, setIndex] = useState(0);
-  const [lat, setLat] = useState(story.events[0].coordinates[0]); //story.events[0].coordinates[1]
-  const [lng, setLng] = useState(story.events[0].coordinates[1]); //story.events[0].coordinates[0]
-  const [zoom, setZoom] = useState(9);
 
   useEffect(() => {
+    if (didMount.current) fly();
+  }, [index]);
+
+  useEffect(() => {
+    story.events.forEach((e) => e.coordinates.reverse());
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [lng, lat],
-      zoom: zoom,
+      center: story.events[index].coordinates,
+      zoom: 9,
     });
+    didMount.current = true;
+
     return () => map.current.remove();
   }, []);
 
@@ -35,28 +40,32 @@ function Map() {
       <div className='map-container' ref={mapContainer}></div>
       <div className='map-overlay'>
         <div>{index}</div>
-        <button onClick={() => navTo()}>test</button>
         <MapNavigator
-          onBackPress={() => setIndex(index - 1)}
-          onForwardPress={() => setIndex(index + 1)}
+          onBackPress={() => {
+            if (index - 1 < 0) return;
+            setIndex(index - 1);
+          }}
+          onForwardPress={() => {
+            if (index + 1 > story.events.length - 1) return;
+            setIndex(index + 1);
+          }}
         />
       </div>
     </div>
   );
 
-  function navTo() {
-    console.log(map);
+  function fly() {
     map.current.flyTo({
       // These options control the ending camera position: centered at
       // the target, at zoom level 9, and north up.
-      center: [74.5, 40],
+      center: story.events[index].coordinates,
       zoom: 9,
-      bearing: 0,
+      bearing: 10,
 
       // These options control the flight curve, making it move
       // slowly and zoom out almost completely before starting
       // to pan.
-      speed: 0.2, // make the flying slow
+      speed: 1.2, // make the flying slow
       curve: 1, // change the speed at which it zooms out
 
       // This can be any easing function: it takes a number between
