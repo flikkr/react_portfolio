@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl/dist/mapbox-gl-csp";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import MapboxWorker from "worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker";
-import MapNavigator from "../components/MapNavigator/MapNavigator";
+import MapNavigator from "../../components/MapNavigator/MapNavigator";
 // import "react-router-dom";
-import story from "../models/story";
+import story from "../../models/story";
 
 import "./Map.scss";
 
